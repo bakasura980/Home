@@ -28,9 +28,9 @@ namespace Exam
             else
             {
                 bool iscontain = false;
-                if (File.Exists("C:/Users/lubo/Desktop/Exam/Exam/bin/Data.txt"))
+                if (File.Exists("C:/Users/lubo/Desktop/Exam1/Home/Exam/Exam/bin/Data.txt"))
                 {
-                    using (StreamReader reader = new StreamReader("C:/Users/lubo/Desktop/Exam/Exam/bin/Data.txt"))
+                    using (StreamReader reader = new StreamReader("C:/Users/lubo/Desktop/Exam1/Home/Exam/Exam/bin/Data.txt"))
                     {
                         if (CountrySTxtBox.Text != null)
                         {
@@ -38,10 +38,11 @@ namespace Exam
 
                             do
                             {
-                                if (line.Contains(CountrySTxtBox.Text))
+                                string[] printexists = line.Split('|');
+
+                                if (printexists[0] == (CountrySTxtBox.Text))
                                 {
                                     iscontain = true;
-                                    string[] printexists = line.Split('|');
                                     PrintCountryLabel.Text = printexists[0];
                                     PrintCapitalLabel.Text = printexists[1];
                                     PrintPopulationLabel.Text = printexists[2];
@@ -57,13 +58,14 @@ namespace Exam
                             string line = reader.ReadLine();
                             do
                             {
-                                if (line.Contains(CapitalSTxtBox.Text))
+                                string[] printexists = line.Split('|');
+                                if (printexists[1] == CapitalSTxtBox.Text)
                                 {
                                     iscontain = true;
-                                    string[] printexists = line.Split('|');
                                     PrintCountryLabel.Text = printexists[0];
                                     PrintCapitalLabel.Text = printexists[1];
                                     PrintPopulationLabel.Text = printexists[2];
+                                    
                                 }
                                 else
                                 {
@@ -76,13 +78,15 @@ namespace Exam
                             string line = reader.ReadLine();
                             do
                             {
-                                if (line.Contains(PopulationSTxtBox.Text))
+                                string[] printexists = line.Split('|');
+
+                                if (printexists[2] == (PopulationSTxtBox.Text))
                                 {
                                     iscontain = true;
-                                    string[] printexists = line.Split('|');
                                     PrintCountryLabel.Text = printexists[0];
                                     PrintCapitalLabel.Text = printexists[1];
                                     PrintPopulationLabel.Text = printexists[2];
+                                    break;
                                 }
                                 else
                                 {
