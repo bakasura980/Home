@@ -46,6 +46,7 @@ namespace Exam
                                     PrintCountryLabel.Text = printexists[0];
                                     PrintCapitalLabel.Text = printexists[1];
                                     PrintPopulationLabel.Text = printexists[2];
+                                    break;
                                 }
                                 else
                                 {
@@ -65,7 +66,7 @@ namespace Exam
                                     PrintCountryLabel.Text = printexists[0];
                                     PrintCapitalLabel.Text = printexists[1];
                                     PrintPopulationLabel.Text = printexists[2];
-                                    
+                                    break;
                                 }
                                 else
                                 {
