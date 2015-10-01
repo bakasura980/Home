@@ -22,9 +22,9 @@ namespace Exam
             set { capital = value; }
         }
 
-        private int population;
+        private string population;
 
-        public int Population
+        public string Population
         {
             get { return population; }
             set { population = value; }

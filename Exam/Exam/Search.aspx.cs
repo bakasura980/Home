@@ -12,108 +12,70 @@ namespace Exam
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            
         }
+
+        private static List<DataInput> colect = SearchColection.GetCountryinfo();
 
         protected void SearchBtn_Click(object sender, EventArgs e)
         {
-            if (PopulationSTxtBox.Text != string.Empty)
+            SearchExist.Text = null;
+            bool exist = false;
+            List<DataInput> data = new List<DataInput>();
+            foreach (var item in colect)
             {
-                if (Convert.ToInt32(PopulationSTxtBox.Text) > 20000000)
+                if (CountrySTxtBox.Enabled == true)
                 {
-                    SearchExist.Text = "Няма толкова много хора в една държава!";
-                    SearchBtn.Enabled = false;
-                }
-            }
-           
-            else
-            {
-                bool iscontain = false;
-                if (File.Exists("C:/Users/lubo/Desktop/Exam1/Home/Exam/Exam/bin/Data.txt"))
-                {
-                    using (StreamReader reader = new StreamReader("C:/Users/lubo/Desktop/Exam1/Home/Exam/Exam/bin/Data.txt"))
+                    if (item.Country.Contains(CountrySTxtBox.Text))
                     {
-                        if (CountrySTxtBox.Text != null)
-                        {
-                            string line = reader.ReadLine();
-
-                            do
-                            {
-                                string[] printexists = line.Split('|');
-
-                                if (printexists[0] == (CountrySTxtBox.Text))
-                                {
-                                    iscontain = true;
-                                    PrintCountryLabel.Text = printexists[0];
-                                    PrintCapitalLabel.Text = printexists[1];
-                                    PrintPopulationLabel.Text = printexists[2];
-                                    break;
-                                }
-                                else
-                                {
-                                    line = reader.ReadLine();
-                                }
-                            } while (line != null);
-                        }
-                        else if (CapitalSTxtBox.Text != null)
-                        {
-                            string line = reader.ReadLine();
-                            do
-                            {
-                                string[] printexists = line.Split('|');
-                                if (printexists[1] == CapitalSTxtBox.Text)
-                                {
-                                    iscontain = true;
-                                    PrintCountryLabel.Text = printexists[0];
-                                    PrintCapitalLabel.Text = printexists[1];
-                                    PrintPopulationLabel.Text = printexists[2];
-                                    break;
-                                }
-                                else
-                                {
-                                    line = reader.ReadLine();
-                                }
-                            } while (line != null);
-                        }
-                        else if (PopulationSTxtBox.Text != null)
-                        {
-                            string line = reader.ReadLine();
-                            do
-                            {
-                                string[] printexists = line.Split('|');
-
-                                if (printexists[2] == (PopulationSTxtBox.Text))
-                                {
-                                    iscontain = true;
-                                    PrintCountryLabel.Text = printexists[0];
-                                    PrintCapitalLabel.Text = printexists[1];
-                                    PrintPopulationLabel.Text = printexists[2];
-                                    break;
-                                }
-                                else
-                                {
-                                    line = reader.ReadLine();
-                                }
-                            } while (line != null);
-                        }
-                        if (iscontain == false)
-                        {
-                            SearchExist.Text = "Търсенето не съществува, моля добавете вашето търсене";
-                        }
+                        exist = true;
+                        data.Add(item);
                     }
                 }
+                else if (CapitalSTxtBox.Enabled == true)
+                {
+                    if (item.Capital.Contains(CapitalSTxtBox.Text))
+                    {
+                        exist = true;
+                        data.Add(item);
+                    }
+                }
+                else if (PopulationSTxtBox.Enabled == true)
+                {
+                    if (item.Population.Contains(PopulationSTxtBox.Text))
+                    {
+                        exist = true;
+                        data.Add(item);
+                    }
+                }
+                
             }
+            if (exist == false)
+            {
+                SearchExist.Text = "Не е създадена подобна държава със столица и население!";
+            }
+            else
+            {
+                dataRepeater.DataSource = data;
+                dataRepeater.DataBind();
+            }
+            
         }
+    
+        
 
-        protected void Selectitem_SelectedIndexChanged(object sender, EventArgs e)
+        protected void Selectitem_TextChanged(object sender, EventArgs e)
         {
             if (Selectitem.Text == "Държава")
             {
-                CountrySTxtBox.Enabled = true;
+                
                 CapitalSTxtBox.Enabled = false;
+                CountrySTxtBox.Enabled = true;
                 PopulationSTxtBox.Enabled = false;
                 CapitalSTxtBox.Text = null;
                 PopulationSTxtBox.Text = null;
-            }else if(Selectitem.Text == "Столица")
+            }
+            if (Selectitem.Text == "Столица")
             {
                 CapitalSTxtBox.Enabled = true;
                 CountrySTxtBox.Enabled = false;
@@ -121,13 +83,15 @@ namespace Exam
                 CountrySTxtBox.Text = null;
                 PopulationSTxtBox.Text = null;
             }
-            else { 
+            if (Selectitem.Text == "Население")
+            {
                 PopulationSTxtBox.Enabled = true;
                 CapitalSTxtBox.Enabled = false;
                 CountrySTxtBox.Enabled = false;
                 CapitalSTxtBox.Text = null;
                 CountrySTxtBox.Text = null;
-            }    
+            }
+
         }
     }
 }

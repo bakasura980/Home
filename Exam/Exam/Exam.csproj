@@ -79,6 +79,7 @@
     <Compile Include="Search.aspx.designer.cs">
       <DependentUpon>Search.aspx</DependentUpon>
     </Compile>
+    <Compile Include="SearchColection.cs" />
     <Compile Include="Searchdoesnotexist.cs" />
   </ItemGroup>
   <ItemGroup>

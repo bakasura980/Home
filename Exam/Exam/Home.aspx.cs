@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.IO;
+using System.Configuration;
 
 namespace Exam
 {
@@ -26,20 +27,20 @@ namespace Exam
                 else
                 {
                     DataInput inp = new DataInput();
-                    inp.Country = CapitalTxtBox.Text;
-                    inp.Capital = CountryTxtBox.Text;
-                    inp.Population = int.Parse(PopulationTxtBox.Text);
-                    if (File.Exists("C:/Users/lubo/Desktop/Exam/Exam/bin/Data.txt"))
+                    inp.Country = CountryTxtBox.Text;
+                    inp.Capital = CapitalTxtBox.Text;
+                    inp.Population = PopulationTxtBox.Text;
+                    if (File.Exists(ConfigurationManager.AppSettings["Path"]))
                     {
                         try
                         {
-                            using (StreamReader reader = new StreamReader("C:/Users/lubo/Desktop/Exam/Exam/bin/Data.txt"))
+                            using (StreamReader reader = new StreamReader(ConfigurationManager.AppSettings["Path"]))
                             {
                                 string line = reader.ReadLine();
                                 do
                                 {
                                     string[] country = line.Split('|');
-                                    if (country[0] == CountryTxtBox.Text)
+                                    if (country[1] == CountryTxtBox.Text)
                                     {
                                         throw new ExistExcepiton("This country exist!");
                                     }
@@ -47,7 +48,7 @@ namespace Exam
                                 } while (line != null);
 
                             }
-                            using (StreamWriter write = new StreamWriter("C:/Users/lubo/Desktop/Exam/Exam/bin/Data.txt", true))
+                            using (StreamWriter write = new StreamWriter(ConfigurationManager.AppSettings["Path"], true))
                             {
                                 write.WriteLine(inp);
                             }
@@ -63,7 +64,7 @@ namespace Exam
                     }
                     else
                     {
-                        using (StreamWriter write = new StreamWriter("C:/Users/lubo/Desktop/Exam/Exam/bin/Data.txt", true))
+                        using (StreamWriter write = new StreamWriter(ConfigurationManager.AppSettings["Path"], true))
                         {
                         }
                     }
